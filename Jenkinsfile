@@ -6,7 +6,6 @@ pipeline {
         bat 'py --version'
       }
     }
-    stages {
     stage('install-selenium') {
       steps {
         bat 'py -m pip install selenium'
