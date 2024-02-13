@@ -11,7 +11,7 @@ pipeline {
         bat 'py -m pip install selenium'
       }
     }
-    stage('hello') {
+    stage('run-python-selenium-script') {
       steps {
         bat 'py app.py'
       }
