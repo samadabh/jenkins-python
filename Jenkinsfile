@@ -11,7 +11,7 @@ pipeline {
         bat 'py -m pip install selenium'
       }
     }
-    stage('run-python-selenium-script') {
+    stage('check-ise-partner-portal-status') {
       steps {
         bat 'py app.py'
       }
