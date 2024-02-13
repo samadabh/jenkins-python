@@ -13,13 +13,13 @@ def func():
     options = webdriver.ChromeOptions()
     driver = webdriver.Chrome(service=service, options=options)
     driver.get("https://ise.cisco.com/partner")
-    time.sleep(5)
+    time.sleep(15)
     driver.find_element(By.ID,"idp-discovery-username").send_keys(useremail)
     driver.find_element(By.ID,"idp-discovery-submit").click()
-    time.sleep(5)
+    time.sleep(15)
     driver.find_element(By.ID,"okta-signin-password").send_keys(password)
     driver.find_element(By.ID,"okta-signin-submit").click()
-    time.sleep(5)
+    time.sleep(30)
     def element_exists():
         try:
             driver.find_element(By.CSS_SELECTOR,"div.regHeader15")
