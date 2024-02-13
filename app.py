@@ -11,7 +11,7 @@ useremail = "saaketh9616@gmail.com"
 password = "Cristiano@cr7"
 
 url = "ise.com/partner"
-def func():
+def check_ise_partner_portal_status():
     service = Service()
     options = webdriver.ChromeOptions()
     driver = webdriver.Chrome(service=service, options=options)
@@ -64,4 +64,4 @@ def func():
             smtp.login(email_sender, email_password)
             smtp.sendmail(email_sender, email_receiver, em.as_string())
 
-func()
+check_ise_partner_portal_status()
