@@ -15,9 +15,11 @@ def func():
     driver.get("https://ise.cisco.com/partner")
     time.sleep(15)
     driver.find_element(By.ID,"idp-discovery-username").send_keys(useremail)
+    time.sleep(3)
     driver.find_element(By.ID,"idp-discovery-submit").click()
     time.sleep(15)
     driver.find_element(By.ID,"okta-signin-password").send_keys(password)
+    time.sleep(3)
     driver.find_element(By.ID,"okta-signin-submit").click()
     time.sleep(30)
     def element_exists():
