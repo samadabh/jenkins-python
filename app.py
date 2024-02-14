@@ -38,17 +38,14 @@ def generate_package(driver):
     def generate_button_exists():
         try:
             driver.find_element(By.ID,"generateBtn")
+            print("Generate Package is working")
+            driver.find_element(By.ID,"generateBtn").click()
+            time.sleep(10)
         except NoSuchElementException:
-            return False
-        return True
-
-    if generate_button_exists:
-        print("Generate Package is working")
-        driver.find_element(By.ID,"generateBtn").click()
-        time.sleep(10)
+            return 0
         return 1
-    else:
-        return 0
+
+    return generate_button_exists
         
 def download_button_exists(driver):
     try:
