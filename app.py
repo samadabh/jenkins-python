@@ -34,6 +34,33 @@ def send_email(body):
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_receiver, em.as_string())
 
+def generate_package(driver):
+            
+    driver.get("https://ise.cisco.com/partner/#pageId=com_cisco_fsm_download_offline_update_page")
+    time.sleep(20)
+            
+    def generate_button_exists():
+        try:
+            driver.find_element(By.ID,"generateBtn")
+        except NoSuchElementException:
+            return False
+        return True
+
+    if generate_button_exists:
+        print("Generate Package is working")
+        driver.find_element(By.ID,"generateBtn").click()
+        time.sleep(10)
+        return 1
+    else:
+        return 0
+        
+def download_button_exists(driver):
+    try:
+        driver.find_element(By.ID,"downloadBtn")
+    except NoSuchElementException:
+        return False
+    return True
+
 def check_ise_partner_portal_status():
     service = Service()
     options = webdriver.ChromeOptions()
@@ -50,49 +77,38 @@ def check_ise_partner_portal_status():
     element2 = driver.find_element(By.ID,"okta-signin-submit")
     driver.execute_script("arguments[0].click();", element2)
     time.sleep(30)
-
+    
     def feed_server_header_exists():
         try:
-            driver.find_element(By.CSS_SELECTOR,"div.regHeader15")
+            # driver.find_element(By.CSS_SELECTOR,"div.regHeader15")
+            driver.find_element(By.XPATH,'//div[@title="Self/Saaketh Madabhushi"]')
         except NoSuchElementException:
             return False
         return True
 
     if feed_server_header_exists:
         print("Partner Portal is working")
-        driver.get("https://ise.cisco.com/partner/#pageId=com_cisco_fsm_download_offline_update_page")
-        time.sleep(20)
 
-        def generate_button_exists():
-            try:
-                driver.find_element(By.ID,"generateBtn")
-            except NoSuchElementException:
-                return False
-            return True
-
-        if generate_button_exists:
-            print("Generate Package is working")
-            driver.find_element(By.ID,"generateBtn").click()
-            time.sleep(10)
-        else:
-            print("Generate Package not avaiialbe")
-            send_email("Generate Package is not working")
-
-        def download_button_exists():
-            try:
-                driver.find_element(By.ID,"downloadBtn")
-            except NoSuchElementException:
-                return False
-            return True
-
-        # if download_button_exists:
-        #     # driver.find_element(By.ID,"downloadBtn").click()
-        #     time.sleep(10)
-        if not download_button_exists:
-            print("Download Package not avaiialbe")
+        attempt1 = generate_package(driver)
         
-        # while True:
-            # pass
+
+        if attempt1:
+
+            if not download_button_exists:
+                print("Download Package not avaiialbe")
+        
+        else:
+            attempt2 = generate_package(driver)
+
+            if attempt2:
+
+                if not download_button_exists(driver):
+                    print("Download Package not avaiialbe")
+            
+            else:
+                print("Generate Package not avaiialbe")
+                send_email("Generate Package is not working")
+        
     else:
         print("Partner Portal is not working")
         send_email("Partner Portal is not working")
