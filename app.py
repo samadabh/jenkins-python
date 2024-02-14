@@ -7,7 +7,7 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 
-useremail = "saaketh89@gmail.com"
+useremail = "saaketh9616@gmail.com"
 password = "Cristiano@cr7"
 
 def send_email(body,screenshot):
