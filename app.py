@@ -26,7 +26,7 @@ def send_email(body,screenshot):
 
     context = ssl.create_default_context()
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 587) as smtp:
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_receiver, em.as_string())
 
@@ -131,7 +131,7 @@ def check_ise_partner_portal_status():
     time.sleep(5)
 
     if driver.current_url == "https://id.cisco.com/signin":
-        print("Login did not work")
+        print("Login button has not redirected to partner portal")
         screenshot = driver.get_screenshot_as_png()
         send_email("Login button has not redirected to partner portal",screenshot)
         return 0
