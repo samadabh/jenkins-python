@@ -26,7 +26,7 @@ def send_email(body,screenshot):
 
     context = ssl.create_default_context()
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 587) as smtp:
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_receiver, em.as_string())
 
@@ -38,9 +38,7 @@ def generate_package(driver):
     def generate_button_exists():
         try:
             driver.find_element(By.ID,"generateBtn")
-            print("Generate Package is working")
-            driver.find_element(By.ID,"generateBtn").click()
-            time.sleep(10)
+            time.sleep(40)
         except NoSuchElementException:
             return 0
         return 1
@@ -53,6 +51,54 @@ def download_button_exists(driver):
     except NoSuchElementException:
         return False
     return True
+
+
+
+def post_login_check(driver,number_of_reloads):
+    
+    def feed_server_header_exists():
+        try:
+            driver.find_element(By.XPATH,'//div[@title="Self/Saaketh Madabhushi"]')
+        except NoSuchElementException:
+            return False
+        return True
+
+    if feed_server_header_exists and driver.current_url == "https://ise.cisco.com/partner/#pageId=com_cisco_fsm_home_page":
+        print("Partner Portal is working")
+
+        number_of_attempts = 5
+        generate_package_worked = 0
+
+        for i in range(1,number_of_attempts + 1):
+            current_attempt = generate_package(driver)
+        
+            if current_attempt:
+                generate_package_worked = 1  
+                driver.find_element(By.ID,"generateBtn").click()
+                time.sleep(20)      
+                if not download_button_exists:
+                    print("Download Package not available")
+                else:
+                    print("Generate package is working on attempt ",end = '')
+                    print(i)
+                break
+        
+        if not generate_package_worked:
+            print("Generate Package not working")
+            screenshot = driver.get_screenshot_as_png()
+            send_email("Generate Package is not working",screenshot)
+    
+    else:
+        if number_of_reloads >= 3:
+            print("Partner Portal is not working")
+            screenshot = driver.get_screenshot_as_png()
+            send_email("Partner Portal is not working",screenshot)
+            return 0
+        else:
+            driver.get("https:ise.cisco.com/partner")
+            time.sleep(30)
+            post_login_check(driver,number_of_reloads + 1)
+
 
 def check_ise_partner_portal_status():
 
@@ -82,47 +128,16 @@ def check_ise_partner_portal_status():
     driver.execute_script("arguments[0].click();", login_button)
     time.sleep(5)
 
-
     if driver.current_url == "https://id.cisco.com/signin":
         print("Login did not work")
         screenshot = driver.get_screenshot_as_png()
         send_email("Login button has not redirected to partner portal",screenshot)
         return 0
 
-    time.sleep(45)
+    time.sleep(30)
 
-    def feed_server_header_exists():
-        try:
-            driver.find_element(By.XPATH,'//div[@title="Self/Saaketh Madabhushi"]')
-        except NoSuchElementException:
-            return False
-        return True
-
-    if feed_server_header_exists and driver.current_url == "https://ise.cisco.com/partner/#pageId=com_cisco_fsm_home_page":
-        print("Partner Portal is working")
-
-        number_of_attempts = 5
-        generate_package_worked = 0
-
-        for i in range(1,number_of_attempts + 1):
-            current_attempt = generate_package(driver)
+    count_of_reloads = 0
+    post_login_check(driver,0)
         
-            if current_attempt:
-                print("Generate package is working on attempt ",end = '')
-                print(i)
-                generate_package_worked = 1        
-                if not download_button_exists:
-                    print("Download Package not available")
-                break
-        
-        if not generate_package_worked:
-            print("Generate Package not working")
-            screenshot = driver.get_screenshot_as_png()
-            send_email("Generate Package is not working",screenshot)
-        
-    else:
-        print("Partner Portal is not working")
-        screenshot = driver.get_screenshot_as_png()
-        send_email("Partner Portal is not working",screenshot)
 
 check_ise_partner_portal_status()
