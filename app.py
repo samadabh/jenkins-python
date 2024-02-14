@@ -90,8 +90,8 @@ def check_ise_partner_portal_status():
         if not download_button_exists:
             print("Download Package not avaiialbe")
         
-        while True:
-            pass
+        # while True:
+            # pass
     else:
         print("Partner Portal is not working")
         send_email("Partner Portal is not working")
