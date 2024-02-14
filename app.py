@@ -66,7 +66,7 @@ def post_login_check(driver,number_of_reloads):
     if feed_server_header_exists and driver.current_url == "https://ise.cisco.com/partner/#pageId=com_cisco_fsm_home_page":
         print("Partner Portal is working after ",end = '')
         print(number_of_reloads,end = ' ')
-        print("number of reloads after login")
+        print("number of reloads post login")
 
         number_of_attempts = 5
         generate_package_worked = 0
