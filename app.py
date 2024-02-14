@@ -26,7 +26,7 @@ def send_email(body,screenshot):
 
     context = ssl.create_default_context()
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_receiver, em.as_string())
 
@@ -124,7 +124,5 @@ def check_ise_partner_portal_status():
         print("Partner Portal is not working")
         screenshot = driver.get_screenshot_as_png()
         send_email("Partner Portal is not working",screenshot)
-
-        
 
 check_ise_partner_portal_status()
