@@ -37,7 +37,7 @@ def send_email(body):
 def generate_package(driver):
             
     driver.get("https://ise.cisco.com/partner/#pageId=com_cisco_fsm_download_offline_update_page")
-    time.sleep(20)
+    time.sleep(30)
             
     def generate_button_exists():
         try:
