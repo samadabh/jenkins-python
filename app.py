@@ -71,6 +71,7 @@ def check_ise_partner_portal_status():
             return True
 
         if generate_button_exists:
+            print("Generate Package is working")
             driver.find_element(By.ID,"generateBtn").click()
             time.sleep(10)
         else:
