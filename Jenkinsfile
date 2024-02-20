@@ -4,7 +4,6 @@ pipeline {
     stage('version') {
       steps {
         bat 'py --version'
-        bat 'cd . > perftest.xml'
       }
     }
     stage('install-selenium') {
@@ -25,7 +24,7 @@ pipeline {
   }
   post {
     always {
-        junit skipPublishingChecks: true, allowEmptyResults: true, testResults: 'perftest.xml'
+        junit skipPublishingChecks: true, allowEmptyResults: true, testResults: ''**/reports/junit/*.xml'
     }
 }
 }
