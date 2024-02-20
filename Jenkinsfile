@@ -18,7 +18,7 @@ pipeline {
     }
     stage('check-ise-partner-portal-status') {
       steps {
-        bat 'python -m pytest test_app.py'
+        bat 'python -m pytest test_app.py -s'
       }
     }
   }
