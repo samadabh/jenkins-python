@@ -6,6 +6,7 @@ import time
 import smtplib
 import ssl
 from email.message import EmailMessage
+import pytest
 
 useremail = "saaketh9616@gmail.com"
 password = "Cristiano@cr7"
@@ -25,12 +26,19 @@ def send_email(body,screenshot):
     em.set_content(body)
     em.add_attachment(screenshot,maintype='image',subtype='png')
 
+    em2 = EmailMessage()
+    em2['From'] = email_sender
+    em2['To'] = email_receiver2
+    em2['Subject'] = subject
+    em2.set_content(body)
+    em2.add_attachment(screenshot,maintype='image',subtype='png')
+
     context = ssl.create_default_context()
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 25, timeout=120) as smtp:
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=120) as smtp:
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_receiver, em.as_string())
-        smtp.sendmail(email_sender, email_receiver2, em.as_string())
+        smtp.sendmail(email_sender, email_receiver2, em2.as_string())
 
 def generate_package(driver):
             
@@ -91,12 +99,14 @@ def post_login_check(driver,number_of_reloads):
             print("Generate Package not working")
             screenshot = driver.get_screenshot_as_png()
             send_email("Generate Package is not working",screenshot)
+            pytest.fail("Generate Package not working")
     
     else:
         if number_of_reloads >= 3:
             print("Partner Portal is not working")
             screenshot = driver.get_screenshot_as_png()
             send_email("Partner Portal is not working",screenshot)
+            pytest.fail("Partner Portal is not working")
             return 0
         else:
             driver.get("https:ise.cisco.com/partner")
@@ -104,7 +114,7 @@ def post_login_check(driver,number_of_reloads):
             post_login_check(driver,number_of_reloads + 1)
 
 
-def check_ise_partner_portal_status():
+def test_ise_partner_portal_status():
 
     service = Service()
     options = webdriver.ChromeOptions()
@@ -126,6 +136,7 @@ def check_ise_partner_portal_status():
         print("Next button has not redirected to Login Page")
         screenshot = driver.get_screenshot_as_png()
         send_email("Next button has not redirected to Login Page",screenshot)
+        pytest.fail("Next button has not redirected to Login Page")
         return 0
     
     login_button = driver.find_element(By.ID,"okta-signin-submit")
@@ -136,12 +147,11 @@ def check_ise_partner_portal_status():
         print("Login button has not redirected to partner portal")
         screenshot = driver.get_screenshot_as_png()
         send_email("Login button has not redirected to partner portal",screenshot)
+        pytest.fail("Login button has not redirected to partner portal")
         return 0
 
     time.sleep(30)
 
     count_of_reloads = 0
     post_login_check(driver,0)
-        
-
-check_ise_partner_portal_status()
+    assert True
