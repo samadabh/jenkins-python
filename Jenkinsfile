@@ -4,8 +4,7 @@ pipeline {
     stage('version') {
       steps {
         bat 'py --version'
-        bat 'export PYTEST_ADDOPTS="--junitxml=/tmp/pytest/report.xml --json-report --json-report-file=/tmp/pytest/report.json"'
-        bat 'cp /tmp/pytest/report.xml $WORKSPACE/perftest.xml'
+        bat 'cd . > perftest.xml'
       }
     }
     stage('install-selenium') {
