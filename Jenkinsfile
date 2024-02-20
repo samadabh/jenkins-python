@@ -20,7 +20,7 @@ pipeline {
       steps {
         bat 'set PYTEST_ADDOPTS="--junitxml=C:/ProgramData/Jenkins/.jenkins/jobs/checking ise partner portal/target/report.xml --json-report --json-report-file=C:/ProgramData/Jenkins/.jenkins/jobs/checking ise partner portal/target/report.json"'
         bat 'python -m pytest test_app.py -s'
-        bat 'cp C:/ProgramData/Jenkins/.jenkins/jobs/checking ise partner portal/target/report.xml $WORKSPACE/perftest.xml'
+        bat 'copy C:/ProgramData/Jenkins/.jenkins/jobs/checking ise partner portal/target/report.xml $WORKSPACE/perftest.xml'
       }
     }
   }
