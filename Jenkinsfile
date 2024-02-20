@@ -25,7 +25,7 @@ pipeline {
   }
   post {
     always {
-        junit allowEmptyResults: true, testResults: 'perftest.xml'
+        junit skipPublishingChecks: true, allowEmptyResults: true, testResults: 'perftest.xml'
     }
 }
 }
