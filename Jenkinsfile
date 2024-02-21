@@ -18,8 +18,7 @@ pipeline {
     }
     stage('check-ise-partner-portal-status') {
       steps {
-        // bat 'set PYTEST_ADDOPTS="--junitxml=C:/ProgramData/Jenkins/.jenkins/workspace/checking ise partner portal/target/report.xml --json-report --json-report-file=C:/ProgramData/Jenkins/.jenkins/workspace/checking ise partner portal/target/report.json"'
-        bat 'python -m pytest test_app.py -s --junitxml=C:/ProgramData/Jenkins/.jenkins/workspace/checking ise partner portal/target/report.xml'
+        bat 'python -m pytest test_app.py -s --junitxml=C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking ise partner portal\\target\\report.xml'
         bat 'copy "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking ise partner portal\\target\\report.xml" "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking ise partner portal\\perftest.xml" /Y'
       }
     }
