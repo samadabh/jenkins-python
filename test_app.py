@@ -119,8 +119,12 @@ def test_ise_partner_portal_status():
     service = Service()
     options = webdriver.ChromeOptions()
     driver = webdriver.Chrome(service=service, options=options)
-    
-    driver.get("https://ise.cisco.com/partner")
+
+    try:
+        driver.get("https://ise.cisco.com/partner")
+    except Exception:
+        send_email("Partner Portal is not working",screenshot)
+        pytest.fail("Partner Portal is not working")
     time.sleep(5)
     
     driver.find_element(By.ID,"idp-discovery-username").send_keys(useremail)
