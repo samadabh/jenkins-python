@@ -97,15 +97,15 @@ def post_login_check(driver,number_of_reloads):
         
         if not generate_package_worked:
             print("Generate Package not working")
-            screenshot = driver.get_screenshot_as_png()
-            send_email("Generate Package is not working",screenshot)
+            # screenshot = driver.get_screenshot_as_png()
+            # send_email("Generate Package is not working",screenshot)
             pytest.fail("Generate Package not working")
     
     else:
         if number_of_reloads >= 3:
             print("Partner Portal is not working")
-            screenshot = driver.get_screenshot_as_png()
-            send_email("Partner Portal is not working",screenshot)
+            # screenshot = driver.get_screenshot_as_png()
+            # send_email("Partner Portal is not working",screenshot)
             pytest.fail("Partner Portal is not working")
             return 0
         else:
@@ -139,8 +139,8 @@ def test_ise_partner_portal_status():
         driver.find_element(By.ID,"okta-signin-password").send_keys(password)
     except NoSuchElementException:
         print("Next button has not redirected to Login Page")
-        screenshot = driver.get_screenshot_as_png()
-        send_email("Next button has not redirected to Login Page",screenshot)
+        # screenshot = driver.get_screenshot_as_png()
+        # send_email("Next button has not redirected to Login Page",screenshot)
         pytest.fail("Next button has not redirected to Login Page")
         return 0
     
@@ -150,8 +150,8 @@ def test_ise_partner_portal_status():
 
     if driver.current_url == "https://id.cisco.com/signin":
         print("Login button has not redirected to partner portal")
-        screenshot = driver.get_screenshot_as_png()
-        send_email("Login button has not redirected to partner portal",screenshot)
+        # screenshot = driver.get_screenshot_as_png()
+        # send_email("Login button has not redirected to partner portal",screenshot)
         pytest.fail("Login button has not redirected to partner portal")
         return 0
 
