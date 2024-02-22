@@ -123,6 +123,7 @@ def test_ise_partner_portal_status():
     try:
         driver.get("https://ise.cisco.com/partner")
     except Exception:
+        screenshot = driver.get_screenshot_as_png()
         send_email("Partner Portal is not working",screenshot)
         pytest.fail("Partner Portal is not working")
     time.sleep(5)
