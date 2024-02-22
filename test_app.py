@@ -123,9 +123,9 @@ def test_ise_partner_portal_status():
     try:
         driver.get("https://ise.cisco.com/partner")
     except Exception:
-        screenshot = driver.get_screenshot_as_png()
-        send_email("Partner Portal is not working",screenshot)
-        pytest.fail("Partner Portal is not working")
+        # screenshot = driver.get_screenshot_as_png()
+        # send_email("Partner Portal is not working",screenshot)
+        pytest.fail("Partner Portal is not loading")
     time.sleep(5)
     
     driver.find_element(By.ID,"idp-discovery-username").send_keys(useremail)
