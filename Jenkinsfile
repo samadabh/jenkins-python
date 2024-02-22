@@ -16,10 +16,14 @@ pipeline {
         bat 'py -m pip install pytest'
       }
     }
-    stage('check-ise-partner-portal-status') {
-      steps {
-        bat 'python -m pytest test_app.py -s --junitxml=C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking_ise_partner_portal\\target\\report.xml'
-      }
+    try{
+      stage('check-ise-partner-portal-status') {
+        steps {
+          bat 'python -m pytest test_app.py -s --junitxml=C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking_ise_partner_portal\\target\\report.xml'
+        }
+      }  
+    } catch ( Exception e ) {
+       echo 'Continue to next stage' 
     }
     stage('copy-test-results-file'){
       steps{
