@@ -19,13 +19,13 @@ pipeline {
     stage('check-ise-partner-portal-status') {
       steps {
         bat 'python -m pytest test_app.py -s --junitxml=C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking_ise_partner_portal\\target\\report.xml'
-        // bat 'copy "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking_ise_partner_portal\\target\\report.xml" "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking_ise_partner_portal\\perftest.xml" /Y'
+        bat 'copy "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking_ise_partner_portal\\target\\report.xml" "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking_ise_partner_portal\\perftest.xml" /Y'
       }
     }
   }
   post {
     always {
-        junit skipPublishingChecks: true, allowEmptyResults: true, skipMarkingBuildUnstable: true, testResults: 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\checking_ise_partner_portal\\target\\report.xml'
+        junit skipPublishingChecks: true, allowEmptyResults: true, skipMarkingBuildUnstable: true, testResults: 'perftest.xml'
     }
 }
 }
