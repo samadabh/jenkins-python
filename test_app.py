@@ -88,7 +88,7 @@ def post_login_check(driver,number_of_reloads):
                 generate_package_worked = 1  
                 driver.find_element(By.ID,"generateBtn").click()
                 time.sleep(20)      
-                if not download_button_exists:
+                if not download_button_exists and i == number_of_attempts:
                     print("Download Package not available")
                 else:
                     print("Generate package is working on attempt ",end = '')
