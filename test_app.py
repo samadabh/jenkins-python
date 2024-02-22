@@ -138,8 +138,7 @@ def test_ise_partner_portal_status():
         # screenshot = driver.get_screenshot_as_png()
         # send_email("Partner Portal is not working",screenshot)
         pytest.fail('Login Page is not loaded')
-    
-    time.sleep(5)
+
     next_button = driver.find_element(By.ID,"idp-discovery-submit")
     driver.execute_script("arguments[0].click();", next_button)
     time.sleep(5)
