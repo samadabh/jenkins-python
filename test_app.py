@@ -8,8 +8,8 @@ import ssl
 from email.message import EmailMessage
 import pytest
 
-useremail = "saaketh9616@gmail.com"
-password = "Cristiano@cr7"
+useremail = "saaketh@gmail.com"
+password = "Cristianocr7"
 
 def send_email(body,screenshot):
 
