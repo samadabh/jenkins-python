@@ -109,7 +109,6 @@ def test_ise_partner_portal_status():
     except NoSuchElementException:
         print("Next button has not redirected to Login Page")
         pytest.fail("Next button has not redirected to Login Page")
-        return 0
     
     login_button = driver.find_element(By.ID,"okta-signin-submit")
     driver.execute_script("arguments[0].click();", login_button)
@@ -118,7 +117,6 @@ def test_ise_partner_portal_status():
     if driver.current_url == "https://id.cisco.com/signin":
         print("Login button has not redirected to partner portal")
         pytest.fail("Login button has not redirected to partner portal")
-        return 0
 
     time.sleep(30)
 
