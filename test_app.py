@@ -11,35 +11,6 @@ import pytest
 useremail = "saaketh9616@gmail.com"
 password = "Cristiano@cr7"
 
-def send_email(body,screenshot):
-
-    email_sender = 'saaketh9616@gmail.com'
-    email_password = 'ubglzrjydzemnhgt'
-    email_receiver = 'swathrao@cisco.com'
-    email_receiver2 = 'samadabh@cisco.com'
-    subject = 'Status of ISE Partner Portal'
-
-    em = EmailMessage()
-    em['From'] = email_sender
-    em['To'] = email_receiver
-    em['Subject'] = subject
-    em.set_content(body)
-    em.add_attachment(screenshot,maintype='image',subtype='png')
-
-    em2 = EmailMessage()
-    em2['From'] = email_sender
-    em2['To'] = email_receiver2
-    em2['Subject'] = subject
-    em2.set_content(body)
-    em2.add_attachment(screenshot,maintype='image',subtype='png')
-
-    context = ssl.create_default_context()
-
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=120) as smtp:
-        smtp.login(email_sender, email_password)
-        smtp.sendmail(email_sender, email_receiver, em.as_string())
-        smtp.sendmail(email_sender, email_receiver2, em2.as_string())
-
 def generate_package(driver):
             
     driver.get("https://ise.cisco.com/partner/#pageId=com_cisco_fsm_download_offline_update_page")
@@ -61,8 +32,6 @@ def download_button_exists(driver):
     except NoSuchElementException:
         return False
     return True
-
-
 
 def post_login_check(driver,number_of_reloads):
     
@@ -97,15 +66,11 @@ def post_login_check(driver,number_of_reloads):
         
         if not generate_package_worked:
             print("Generate Package not working")
-            # screenshot = driver.get_screenshot_as_png()
-            # send_email("Generate Package is not working",screenshot)
             pytest.fail("Generate Package not working")
     
     else:
         if number_of_reloads >= 3:
             print("Partner Portal is not working")
-            # screenshot = driver.get_screenshot_as_png()
-            # send_email("Partner Portal is not working",screenshot)
             pytest.fail("Partner Portal is not working")
             return 0
         else:
@@ -123,8 +88,6 @@ def test_ise_partner_portal_status():
     try:
         driver.get("https://ise.cisco.com/partner")
     except Exception:
-        # screenshot = driver.get_screenshot_as_png()
-        # send_email("Partner Portal is not working",screenshot)
         pytest.fail("Partner Portal is not loading")
     time.sleep(5)
     
@@ -135,8 +98,6 @@ def test_ise_partner_portal_status():
             pytest.fail("Login Page is not loaded")
     
     else:
-        # screenshot = driver.get_screenshot_as_png()
-        # send_email("Partner Portal is not working",screenshot)
         pytest.fail('Login Page is not loaded')
 
     next_button = driver.find_element(By.ID,"idp-discovery-submit")
@@ -147,8 +108,6 @@ def test_ise_partner_portal_status():
         driver.find_element(By.ID,"okta-signin-password").send_keys(password)
     except NoSuchElementException:
         print("Next button has not redirected to Login Page")
-        # screenshot = driver.get_screenshot_as_png()
-        # send_email("Next button has not redirected to Login Page",screenshot)
         pytest.fail("Next button has not redirected to Login Page")
         return 0
     
@@ -158,8 +117,6 @@ def test_ise_partner_portal_status():
 
     if driver.current_url == "https://id.cisco.com/signin":
         print("Login button has not redirected to partner portal")
-        # screenshot = driver.get_screenshot_as_png()
-        # send_email("Login button has not redirected to partner portal",screenshot)
         pytest.fail("Login button has not redirected to partner portal")
         return 0
 
