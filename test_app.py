@@ -13,7 +13,7 @@ password = "Cristiano@cr7"
 
 def send_email(body,screenshot):
 
-    email_sender = 'saaketh9616@gmail.com'
+    email_sender = 'saaketh9@gmail.com'
     email_password = 'ubglzrjydzemnhgt'
     email_receiver = 'swathrao@cisco.com'
     email_receiver2 = 'samadabh@cisco.com'
