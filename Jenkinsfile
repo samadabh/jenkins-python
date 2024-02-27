@@ -33,5 +33,8 @@ pipeline {
     always {
         junit skipPublishingChecks: true, allowEmptyResults: true, skipMarkingBuildUnstable: true, testResults: 'perftest.xml'
     }
+    failure {  
+        mail bcc: '', body: "<b>Feed Portal access is failing, check on priority</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "Feed portal access not working -> ${env.JOB_NAME}", to: "swathrao@cisco.com";  
+    } 
 }
 }
