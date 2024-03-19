@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
 import time
 import smtplib
 import ssl
@@ -91,27 +92,25 @@ def test_ise_partner_portal_status():
         pytest.fail("Partner Portal is not loading")
     time.sleep(5)
     
-    if driver.current_url == 'https://id.cisco.com/':
+    if str(driver.current_url).startswith('https://id.cisco.com/'):
         try:
-            driver.find_element(By.ID,"idp-discovery-username").send_keys(useremail)
+            driver.find_element(By.ID,"input28").send_keys(useremail)
         except NoSuchElementException:
             pytest.fail("Login Page is not loaded")
     
     else:
         pytest.fail('Login Page is not loaded')
 
-    next_button = driver.find_element(By.ID,"idp-discovery-submit")
-    driver.execute_script("arguments[0].click();", next_button)
-    time.sleep(5)
+    driver.find_element(By.ID,"input28").send_keys(Keys.RETURN)
+    time.sleep(8)
 
     try:
-        driver.find_element(By.ID,"okta-signin-password").send_keys(password)
+        driver.find_element(By.ID,"input64").send_keys(password)
     except NoSuchElementException:
         print("Next button has not redirected to Login Page")
         pytest.fail("Next button has not redirected to Login Page")
     
-    login_button = driver.find_element(By.ID,"okta-signin-submit")
-    driver.execute_script("arguments[0].click();", login_button)
+    driver.find_element(By.ID,"input64").send_keys(Keys.RETURN)
     time.sleep(5)
 
     if driver.current_url == "https://id.cisco.com/signin":
